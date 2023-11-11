@@ -1,0 +1,13 @@
+name: ECS Deploy 
+
+on:
+  workflow_dispatch:
+    types: ["deploy_ecs"]
+
+jobs: 
+  deploy: 
+    runs-on: ubuntu-latest 
+    steps: 
+      - name: Success!
+        run: |  
+          echo "We did it!"
