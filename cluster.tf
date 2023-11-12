@@ -1,3 +1,3 @@
 module "ecs-cluster" {
-    source = "git@github.com:jdial1996/terraform-modules//modules/ecs?ref=ecs-v0.1.0"
+    source = "https://github.com/jdial1996/terraform-modules.git//modules/ecs?ref=ecs-v0.1.0"
 }
