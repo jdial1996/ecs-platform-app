@@ -16,7 +16,7 @@ provider "aws" {
 terraform {
   backend "s3" {
     bucket = "platform-app-state"
-    key    = "deploy"
+    key    = "ecs/ecs-state.tfstate"
     region = "eu-west-1"
   }
 }
