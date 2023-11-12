@@ -51,7 +51,7 @@ data "aws_iam_policy_document" "ecs_deploy_tf_policy_doc" {
 }
 
 resource "aws_iam_policy" "ecs_deploy_tf_policy" {
-  name        = "tf_policy"
+  name        = "ecs-deploy-tf-policy"
   description = "Allow Terraform Actions & ECS Deploy"
   policy      = data.aws_iam_policy_document.ecs_deploy_tf_policy_doc.json
 }
@@ -59,4 +59,8 @@ resource "aws_iam_policy" "ecs_deploy_tf_policy" {
 resource "aws_iam_role_policy_attachment" "ecs_deploy_tf_policy_attachment" {
   role       = aws_iam_role.ecs_deploy_oidc_iam_role.name
   policy_arn = aws_iam_policy.ecs_deploy_tf_policy.arn
+}
+
+output "gha_role_arn" {
+  value = aws_iam_role.ecs_deploy_oidc_iam_role.arn
 }
