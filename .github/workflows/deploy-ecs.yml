@@ -11,3 +11,20 @@ jobs:
     - name: Print commit SHA
       run: |
         echo "Commit SHA: ${{ github.event.client_payload.sha }}"
+        export TF_VAR_image_tag=${{ github.event.client_payload.sha }}
+
+    # deploy
+    - name: Setup Terraform 
+      uses: hashicorp/setup-terraform@v2
+
+    - name: Terraform init
+      run: | 
+        terraform init 
+    
+    - name: Terraform plan
+      run: | 
+        terraform plan
+
+    # - name: Terraform apply 
+    #   run: |
+    #     terraform apply --auto-approve
