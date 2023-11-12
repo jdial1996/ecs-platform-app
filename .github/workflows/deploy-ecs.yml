@@ -21,8 +21,7 @@ jobs:
         role-to-assume: arn:aws:iam::355285117207:role/ecs-deploy-role-rw
         role-duration-seconds: 1000
         aws-region: eu-west-1
-
-    # deploy
+        
     - name: Setup Terraform 
       uses: hashicorp/setup-terraform@v2
 
