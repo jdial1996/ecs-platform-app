@@ -8,6 +8,6 @@ jobs:
   deploy: 
     runs-on: ubuntu-latest 
     steps: 
-      - name: Success!
-        run: |  
-          echo "We did it!"
+    - name: Print commit SHA
+      run: |
+        echo "Commit SHA: ${{ github.event.client_payload.sha }}"
