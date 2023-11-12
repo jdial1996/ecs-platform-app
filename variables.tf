@@ -52,7 +52,6 @@ variable "image_name" {
 variable "image_tag" {
   description = "The version of the image to use (image tag)."
   type        = string
-  default     = "703575f0dc792fb0ed345f2fbfadb3385c8b42d5"
 }
 
 variable "command" {
