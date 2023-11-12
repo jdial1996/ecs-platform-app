@@ -7,25 +7,34 @@ on:
 jobs: 
   deploy: 
     runs-on: ubuntu-latest 
+    permissions:
+      id-token: write 
+      contents: read 
+
     steps: 
     - name: Checkout Code 
       uses: actions/checkout@v4
-    - name: Print commit SHA
-      run: |
-        echo "Commit SHA: ${{ github.event.client_payload.sha }}"
-        export TF_VAR_image_tag=${{ github.event.client_payload.sha }}
+
+    - name: Configure AWS Credentials
+      uses: aws-actions/configure-aws-credentials@v4
+      with:
+        role-to-assume: arn:aws:iam::355285117207:role/ecs-deploy-role-rw
+        role-duration-seconds: 1000
+        aws-region: eu-west-1
 
     # deploy
     - name: Setup Terraform 
       uses: hashicorp/setup-terraform@v2
 
     - name: Terraform init
-      run: | 
-        terraform init 
+      run: |
+        eval `ssh-agent -s` 
+        ssh-add - <<< '${{ secrets.TF_MODULES_SSH_KEY }}'
+        terraform init
     
     - name: Terraform plan
       run: | 
-        terraform plan
+        TF_VAR_image_tag=${{ github.event.client_payload.sha }} terraform plan
 
     # - name: Terraform apply 
     #   run: |
