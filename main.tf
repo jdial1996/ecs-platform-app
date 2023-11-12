@@ -4,7 +4,7 @@ resource "aws_cloudwatch_log_group" "ecs_task_log_group" {
 
 resource "aws_security_group" "ecs_security_group" {
   name   = "${var.service_name}-ecs-sg"
-  vpc_id = var.vpc_id
+  vpc_id = module.ecs-cluster.vpc_id
 
   ingress {
     from_port       = 5000
@@ -23,7 +23,7 @@ resource "aws_security_group" "ecs_security_group" {
 
 resource "aws_ecs_task_definition" "test-deployment2" {
   family                   = var.service_name
-  execution_role_arn       = var.ecs_task_exeuction_role
+  execution_role_arn       = aws_iam_role.ecs_task_execution_role.arn
   requires_compatibilities = ["FARGATE"]
   network_mode             = "awsvpc"
   cpu                      = "256"
@@ -56,11 +56,11 @@ resource "aws_ecs_task_definition" "test-deployment2" {
 
 resource "aws_ecs_service" "test-deployment" {
   name            = var.service_name
-  cluster         = var.cluster_arn
+  cluster         = module.ecs-cluster.ecs_cluster_arn
   task_definition = aws_ecs_task_definition.test-deployment2.arn
   desired_count   = var.desired_count
   network_configuration {
-    subnets         = var.private_subnet_ids
+    subnets         = module.ecs-cluster.private_subnets
     security_groups = [aws_security_group.ecs_security_group.id]
   }
 

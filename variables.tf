@@ -60,13 +60,6 @@ variable "command" {
   default     = []
 }
 
-
-variable "ecs_task_exeuction_role" {
-  description = "The IAM role ARN that allows ECS nodes and the docker daemon to make AWS API calls."
-  default     = "arn:aws:iam::355285117207:role/test-role"
-  type        = string
-}
-
 variable "flask_app_port" {
   description = "The port that the Flask Docker container is lisetning on"
   type        = number
