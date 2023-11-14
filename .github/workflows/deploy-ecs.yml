@@ -1,8 +1,8 @@
 name: ECS Deploy 
 
-on: push
-  # repository_dispatch:
-  #   types: ["deploy_ecs"]
+on:
+  repository_dispatch:
+    types: ["deploy_ecs"]
 
 jobs: 
   deploy: 
