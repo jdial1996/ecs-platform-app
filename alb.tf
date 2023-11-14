@@ -3,7 +3,7 @@ resource "aws_lb" "my_alb" {
   name               = "${var.service_name}-alb"
   internal           = false
   load_balancer_type = "application"
-  subnets            = var.public_subnet_ids
+  subnets            =  module.ecs-cluster.public_subnets
   security_groups    = [aws_security_group.alb_sg.id]
   idle_timeout       = 4000
 }
