@@ -40,7 +40,7 @@ data "aws_iam_policy_document" "ecs_deploy_tf_policy_doc" {
       "s3:ListBucket",
       "s3:GetObject",
       "s3:PutObject",
-      "iam:PassRole",
+      "iam:*",
       "logs:*",
       "ecs:*",
       "ec2:*",

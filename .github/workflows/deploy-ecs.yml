@@ -1,8 +1,8 @@
 name: ECS Deploy 
 
-on:
-  repository_dispatch:
-    types: ["deploy_ecs"]
+on: push
+  # repository_dispatch:
+  #   types: ["deploy_ecs"]
 
 jobs: 
   deploy: 
@@ -33,8 +33,11 @@ jobs:
     
     - name: Terraform plan
       run: | 
+        terraform workspace list 
+        terraform workspace select ${{ github.event.client_payload.environment }}
         TF_VAR_image_tag=${{ github.event.client_payload.sha }} terraform plan
 
-    # - name: Terraform apply 
-    #   run: |
-    #     terraform apply --auto-approve
+    - name: Terraform apply 
+      run: |
+        "Applying....."
+        terraform workspace show 
