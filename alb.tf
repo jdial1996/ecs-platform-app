@@ -1,6 +1,6 @@
 
 resource "aws_lb" "my_alb" {
-  name               = "${var.service_name}-alb"
+  name               = "${var.service_name}-alb-${terraform.workspace}"
   internal           = false
   load_balancer_type = "application"
   subnets            =  module.ecs-cluster.public_subnets
@@ -9,7 +9,7 @@ resource "aws_lb" "my_alb" {
 }
 
 resource "aws_security_group" "alb_sg" {
-  name   = "${var.service_name}-alb-sg"
+  name   = "${var.service_name}-alb-sg-${terraform.workspace}"
   vpc_id = var.vpc_id
 
   ingress {
@@ -32,7 +32,7 @@ resource "aws_lb_listener" "alb_listener" {
 }
 
 resource "aws_lb_target_group" "platform_app_tg" {
-  name        = "${var.service_name}-tg"
+  name        = "${var.service_name}-tg-${terraform.workspace}"
   target_type = "ip"
   port        = 80
   protocol    = "HTTP"

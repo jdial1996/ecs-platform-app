@@ -1,9 +1,9 @@
 resource "aws_cloudwatch_log_group" "ecs_task_log_group" {
-  name = "${var.service_name}-log-group"
+  name = "${var.service_name}-log-group-${terraform.workspace}"
 }
 
 resource "aws_security_group" "ecs_security_group" {
-  name   = "${var.service_name}-ecs-sg"
+  name   = "${var.service_name}-ecs-sg-${terraform.workspace}"
   vpc_id = module.ecs-cluster.vpc_id
 
   ingress {
@@ -22,7 +22,7 @@ resource "aws_security_group" "ecs_security_group" {
 }
 
 resource "aws_ecs_task_definition" "test-deployment2" {
-  family                   = var.service_name
+  family                   = "${var.service_name}-${terraform.workspace}"
   execution_role_arn       = aws_iam_role.ecs_task_execution_role.arn
   requires_compatibilities = ["FARGATE"]
   network_mode             = "awsvpc"
@@ -55,7 +55,7 @@ resource "aws_ecs_task_definition" "test-deployment2" {
 }
 
 resource "aws_ecs_service" "test-deployment" {
-  name            = var.service_name
+  name            = "${var.service_name}-${terraform.workspace}"
   cluster         = module.ecs-cluster.ecs_cluster_arn
   task_definition = aws_ecs_task_definition.test-deployment2.arn
   desired_count   = var.desired_count

@@ -1,5 +1,6 @@
 module "ecs-cluster" {
     source = "git@github.com:jdial1996/terraform-modules//modules/ecs?ref=ecs-v0.1.0"
+    cluster_name = "${var.service_name}-cluster-${terraform.workspace}"
 }
 
 data "aws_iam_policy_document" "ecs_task_execution_assume_role_policy_doc" {
