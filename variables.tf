@@ -1,9 +1,3 @@
-variable "vpc_id" {
-  description = "The id of the VPC that the application will be deployed into."
-  type        = string
-  default     = "vpc-0bd32988101c051fa"
-}
-
 variable "private_subnet_ids" {
   description = "The subnet ids for the Fargate Deployment."
   type        = list(string)
