@@ -38,5 +38,4 @@ jobs:
 
     - name: Terraform apply 
       run: |
-        echo 'Applying.....'
-        terraform workspace show 
+        TF_VAR_image_tag=${{ github.event.client_payload.sha }} terraform apply --auto-approve
