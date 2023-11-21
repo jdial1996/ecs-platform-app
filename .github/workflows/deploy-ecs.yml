@@ -33,7 +33,6 @@ jobs:
     
     - name: Terraform plan
       run: | 
-        terraform workspace list 
         terraform workspace select ${{ github.event.client_payload.environment }}  || terraform workspace new ${{ github.event.client_payload.environment }}
         TF_VAR_image_tag=${{ github.event.client_payload.sha }} terraform plan
 
