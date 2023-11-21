@@ -10,7 +10,7 @@ resource "aws_lb" "my_alb" {
 
 resource "aws_security_group" "alb_sg" {
   name   = "${var.service_name}-alb-sg-${terraform.workspace}"
-  vpc_id = var.vpc_id
+  vpc_id = module.ecs-cluster.vpc_id
 
   ingress {
     protocol    = "tcp"
@@ -36,5 +36,5 @@ resource "aws_lb_target_group" "platform_app_tg" {
   target_type = "ip"
   port        = 80
   protocol    = "HTTP"
-  vpc_id      = var.vpc_id
+  vpc_id      = module.ecs-cluster.vpc_id
 }
